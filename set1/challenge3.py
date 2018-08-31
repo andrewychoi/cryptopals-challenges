@@ -1,5 +1,3 @@
-import base64
-
 LOWER_VS_UPPER_RATIO = 3
 
 # Frequency table from https://en.wikipedia.org/wiki/Letter_frequency
@@ -96,7 +94,7 @@ def unscramble(encrypted_bytes):
     top_scores = sorted([(score, key, decrypted) for key, (score, decrypted) in score_by_key.items()], reverse=True)
 
     # for score in top_scores[:5]:
-        # print(score)
+    # print(score)
     return top_scores[0]
 
 
