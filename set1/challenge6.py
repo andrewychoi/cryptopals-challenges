@@ -34,6 +34,7 @@ def test_hamming_distance():
     # reflexivity test, just in case
     assert hamming_distance(str1, str2) == hamming_distance(str2, str1)
 
+
 def get_scored_keysizes(cyphertext, num_blocks=2):
     assert num_blocks >= 2, "Can't score potential keysizes with less than two blocks"
 
@@ -82,7 +83,7 @@ def main():
         top_keysizes = (keysize for score, keysize in scored_keysizes[:3])
         keysizes_to_try.update(top_keysizes)
     print(keysizes_to_try)
-    
+
     transpositions = {}
     for keysize in keysizes_to_try:
         print("Trying keysize:", keysize)
@@ -106,6 +107,7 @@ def main():
     # print(b"".join(transposed_decrypted))
     # print(transpose_blocks(b"".join(transposed_decrypted), 29))
     print(encrypt(cyphertext, recovered_key))
+
 
 if __name__ == "__main__":
     main()
