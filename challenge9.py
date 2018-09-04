@@ -1,4 +1,4 @@
-def pkcs7_pad(plaintext, block_size):
+def pkcs7_pad(plaintext, block_size=16):
     """
     Pad a plaintext to a specific block size.
 
