@@ -1,21 +1,22 @@
 import base64
 import itertools
+from typing import Tuple, List
 
 from challenge3 import unscramble
 from challenge5 import encrypt
 
 
-def hamming_distance(str1, str2):
+def hamming_distance(first: bytes, second: bytes) -> int:
     """
     Calculate Hamming distance: count the number of bits of difference between
-    two strings.
+    two bytestrings.
 
-    XOR the two strings together, and then shift each bit to be the LSB and AND with 1
+    XOR the two bytestrings together, and then shift each bit to be the LSB and AND with 1
     """
     bits_diffs = []
 
-    assert len(str1) == len(str2), "Incompatible lengths in Hamming distance calculation"
-    for char1, char2 in zip(str1, str2):
+    assert len(first) == len(second), "Incompatible lengths in Hamming distance calculation"
+    for char1, char2 in zip(first, second):
         xored = char1 ^ char2
         # range goes to 9 because there are potentially 8 bits to check
         bits_diff = sum((xored >> i) & 1 for i in range(0, 9))
@@ -27,15 +28,15 @@ def test_hamming_distance():
     """
     Test case from docs
     """
-    str1 = b"this is a test"
-    str2 = b"wokka wokka!!!"
-    assert hamming_distance(str1, str2) == 37
+    first = b"this is a test"
+    second = b"wokka wokka!!!"
+    assert hamming_distance(first, second) == 37
 
     # reflexivity test, just in case
-    assert hamming_distance(str1, str2) == hamming_distance(str2, str1)
+    assert hamming_distance(first, second) == hamming_distance(second, first)
 
 
-def get_scored_keysizes(cyphertext, num_blocks=2):
+def get_scored_keysizes(cyphertext: bytes, num_blocks: int = 2) -> List[Tuple[float, int]]:
     assert num_blocks >= 2, "Can't score potential keysizes with less than two blocks"
 
     keysizes = list(range(2, 41))
@@ -57,7 +58,7 @@ def get_scored_keysizes(cyphertext, num_blocks=2):
     return sorted((distance / keysize, keysize) for keysize, distance in keysize_to_distance.items())
 
 
-def transpose_blocks(cyphertext, keysize):
+def transpose_blocks(cyphertext: bytes, keysize: int) -> List[bytes]:
     transposed = []
     for i in range(keysize):
         sliced = itertools.islice(cyphertext, i, None, keysize)

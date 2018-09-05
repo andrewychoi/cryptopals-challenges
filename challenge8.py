@@ -1,7 +1,7 @@
 import itertools
 
 
-def count_identical_chunks(ciphertext, aligned=False):
+def count_identical_chunks(ciphertext: bytes, aligned: bool = False) -> int:
     """
     returns a count of 16-byte chunks that are the same in a ciphertext
 

@@ -1,3 +1,5 @@
+from typing import Tuple
+
 LOWER_VS_UPPER_RATIO = 3
 
 # Frequency table from https://en.wikipedia.org/wiki/Letter_frequency
@@ -76,7 +78,7 @@ freq_table = {**lower_freq_table, **upper_freq_table, **punctuation_freq_table, 
 keys = range(0, 0xff)
 
 
-def unscramble(encrypted_bytes):
+def unscramble(encrypted_bytes: bytes) -> Tuple[float, int, bytes]:
     """
     Use single char XOR to decode an encrypted plaintext
 

@@ -1,9 +1,10 @@
 import base64
+
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
 
-def encrypt_aes_ecb(plaintext, key) -> bytes:
+def encrypt_aes_ecb(plaintext: bytes, key: bytes) -> bytes:
     backend = default_backend()
     cipher = Cipher(algorithms.AES(key), modes.ECB(), backend=backend)
     encryptor = cipher.encryptor()
@@ -11,7 +12,7 @@ def encrypt_aes_ecb(plaintext, key) -> bytes:
     return encrypted
 
 
-def decrypt_aes_ecb(ciphertext, key) -> bytes:
+def decrypt_aes_ecb(ciphertext: bytes, key: bytes) -> bytes:
     backend = default_backend()
     cipher = Cipher(algorithms.AES(key), modes.ECB(), backend=backend)
     decryptor = cipher.decryptor()
@@ -19,7 +20,7 @@ def decrypt_aes_ecb(ciphertext, key) -> bytes:
     return decrypted
 
 
-def solve_openssl(ciphertext, key):
+def solve_openssl(ciphertext: bytes, key: bytes) -> bytes:
     """
     solution using openssl
     """

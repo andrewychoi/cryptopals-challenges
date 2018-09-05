@@ -1,7 +1,7 @@
 import itertools
 
 
-def encrypt(plaintext, key):
+def encrypt(plaintext: bytes, key: bytes) -> bytes:
     encrypted = bytes([
         plaintext_byte ^ key_byte for plaintext_byte, key_byte in zip(plaintext, itertools.cycle(key))
     ])
