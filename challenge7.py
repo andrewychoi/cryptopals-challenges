@@ -3,7 +3,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
 
-def encrypt_aes_ecb(plaintext, key):
+def encrypt_aes_ecb(plaintext, key) -> bytes:
     backend = default_backend()
     cipher = Cipher(algorithms.AES(key), modes.ECB(), backend=backend)
     encryptor = cipher.encryptor()
@@ -11,7 +11,7 @@ def encrypt_aes_ecb(plaintext, key):
     return encrypted
 
 
-def decrypt_aes_ecb(ciphertext, key):
+def decrypt_aes_ecb(ciphertext, key) -> bytes:
     backend = default_backend()
     cipher = Cipher(algorithms.AES(key), modes.ECB(), backend=backend)
     decryptor = cipher.decryptor()

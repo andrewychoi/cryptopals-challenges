@@ -1,4 +1,5 @@
 import random
+from typing import Tuple
 
 from challenge7 import encrypt_aes_ecb
 from challenge8 import count_identical_chunks
@@ -10,7 +11,7 @@ def generate_16_random_bytes() -> bytes:
     return bytes([random.randrange(0, 0xff) for i in range(0, 16)])
 
 
-def encryption_oracle(plaintext: bytes) -> bytes:
+def encryption_oracle(plaintext: bytes) -> Tuple[str, bytes]:
     key = generate_16_random_bytes()
 
     prepadding = bytes([random.randrange(0, 0xff) for i in range(0, random.randrange(5, 11))])
@@ -30,7 +31,7 @@ def encryption_oracle(plaintext: bytes) -> bytes:
     return mode, ciphertext
 
 
-def detect_mode(ciphertext):
+def detect_mode(ciphertext: bytes) -> str:
     """
     Can probably tune the threshold--will try it for a bit
 
