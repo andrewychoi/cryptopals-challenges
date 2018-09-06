@@ -2,8 +2,8 @@ import base64
 import itertools
 from typing import Tuple, List
 
-from challenge3 import unscramble
-from challenge5 import encrypt
+from challenge03 import unscramble
+from challenge05 import encrypt
 
 
 def hamming_distance(first: bytes, second: bytes) -> int:

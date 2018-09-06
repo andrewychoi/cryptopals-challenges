@@ -1,9 +1,9 @@
 import random
 from typing import Tuple
 
-from challenge7 import encrypt_aes_ecb
-from challenge8 import count_identical_chunks
-from challenge9 import pkcs7_pad
+from challenge07 import encrypt_aes_ecb
+from challenge08 import count_identical_chunks
+from challenge09 import pkcs7_pad
 from challenge10 import encrypt_aes_cbc
 
 
