@@ -1,6 +1,4 @@
 import base64
-import random
-from typing import Tuple
 
 from challenge6 import get_scored_keysizes
 from challenge7 import encrypt_aes_ecb
@@ -72,6 +70,7 @@ def main():
         # now update the injection string
         # remove the first char of noise, append the new char that's known
         injection_string = injection_string[1:] + decrypted_char
+
 
 if __name__ == "__main__":
     main()

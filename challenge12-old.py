@@ -1,6 +1,4 @@
 import base64
-import random
-from typing import Tuple
 
 from challenge6 import get_scored_keysizes
 from challenge7 import encrypt_aes_ecb
@@ -17,7 +15,8 @@ def encryption_oracle(plaintext: bytes) -> bytes:
     garbage_padded_text = b"".join([plaintext, to_append])
 
     padded_text = pkcs7_pad(garbage_padded_text)
-    if random.random() >= 0:
+    # if random.random() >= 0:
+    if True:
         # ECB
         mode = "ECB"
         ciphertext = encrypt_aes_ecb(padded_text, consistent_key)
@@ -41,20 +40,14 @@ def main():
     print(detect_mode(ciphertext))
 
     chars_as_bytes = [bytes([i]) for i in range(0, 0xff + 1)]
-    # block_size = 16
-    block_size = 16 * 100
-
     decrypted_chars = []
     just_encrypted = encryption_oracle(b"")
-    # injection_string = b"A" * (block_size - 1)
-    injection_string = b"A" * (block_size - 1)
-    print(len(just_encrypted))
-    print(len(just_encrypted))
 
+    block_size = len(just_encrypted)
     injection_string = b"A" * (block_size - 1)
-    for i in range(0, len(just_encrypted)):
-        # if i % block_size == 0:
-        curr_block = i // block_size
+
+    # TODO: figure out what is happening with the -5
+    for i in range(0, len(just_encrypted) - 5):
         # negative index to ensure that we keep injecting more ciphertext
         # inelegant solution--should be fixable
         if i != 0:
@@ -68,15 +61,16 @@ def main():
             for_oracle = injection_string + curr_char
             # print(for_oracle)
             ciphertext = encryption_oracle(for_oracle)
-            candidate_ciphertexts[ciphertext[block_size * curr_block:block_size * (curr_block + 1)]] = curr_char
+            candidate_ciphertexts[ciphertext[:block_size]] = curr_char
 
-        assert true_ciphertext[block_size * curr_block:block_size * (curr_block + 1)] in candidate_ciphertexts.keys()
-        decrypted_char = candidate_ciphertexts[true_ciphertext[block_size * curr_block:block_size * (curr_block + 1)]]
+        assert true_ciphertext[:block_size] in candidate_ciphertexts.keys()
+        decrypted_char = candidate_ciphertexts[true_ciphertext[:block_size]]
         decrypted_chars.append(decrypted_char)
         print(b"".join(decrypted_chars))
         # now update the injection string
         # remove the first char of noise, append the new char that's known
         injection_string = injection_string[1:] + decrypted_char
+
 
 if __name__ == "__main__":
     main()
