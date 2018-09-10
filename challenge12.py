@@ -18,6 +18,7 @@ def encryption_oracle(plaintext: bytes) -> bytes:
 
 
 def main():
+    # inject a large string to exploit the same input/same output property of ECB mode
     injecting = b"A" * 1000
     ciphertext = encryption_oracle(injecting)
     scores = get_scored_keysizes(ciphertext, 4)
@@ -32,7 +33,6 @@ def main():
     block_size = 16
     injection_string = b""
 
-    # TODO: figure out what is happening with the -5
     # looks like the padding changes in true_ciphertext when the length of the injection string changes
     for i in range(0, len(just_encrypted)):
         curr_block = i // block_size
@@ -58,10 +58,11 @@ def main():
         end_index = block_size * (curr_block + 1)
 
         check_from_true = true_ciphertext[start_index:end_index]
-        assert check_from_true in candidate_ciphertexts.keys()
-        decrypted_char = candidate_ciphertexts[check_from_true]
-        decrypted_chars.append(decrypted_char)
-        print(b"".join(decrypted_chars))
+        # assert check_from_true in candidate_ciphertexts.keys()
+        if (check_from_true in candidate_ciphertexts):
+            decrypted_char = candidate_ciphertexts[check_from_true]
+            decrypted_chars.append(decrypted_char)
+            print(b"".join(decrypted_chars))
         # now update the injection string
         # append the new char that's known
         injection_string = injection_string + decrypted_char
