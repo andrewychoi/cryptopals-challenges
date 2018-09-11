@@ -45,10 +45,10 @@ def detect_mode(ciphertext: bytes) -> str:
 def main():
     right = 0
     wrong = 0
-    for i in range(0, 1000):
+    num_trials = 1000
+    print("Running", num_trials, "trials...")
+    for i in range(0, num_trials):
         true_mode, ciphertext = encryption_oracle(b"A" * 100)
-        # print(key)
-        # print(ciphertext)
         detected_mode = detect_mode(ciphertext)
         if true_mode == detected_mode:
             right += 1

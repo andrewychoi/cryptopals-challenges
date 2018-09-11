@@ -28,6 +28,13 @@ def main():
     else:
         assert False
 
+    test_input = b"YELLOW SUBMARINE" + b"\x10" * 16
+    test_output = b"YELLOW SUBMARINE"
+    try:
+        assert strip_pkcs7_padding(test_input) == test_output
+    except ValueError as e:
+        assert False
+
 
 def strip_pkcs7_padding(plaintext: bytes) -> bytes:
     block_size = 16
@@ -35,6 +42,8 @@ def strip_pkcs7_padding(plaintext: bytes) -> bytes:
         raise ValueError("Plaintext length is not a multiple of block size")
     # autocasts to int, so no need to recast
     padding_length = plaintext[-1]
+    if padding_length > block_size:
+        raise ValueError("Padding too long for block")
     padding = plaintext[-padding_length:]
     chars_in_padding = set(char for char in padding)
     if len(chars_in_padding) != 1:
